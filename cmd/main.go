@@ -2,7 +2,6 @@ package main
 
 import (
 	"os"
-	"fmt"
 	"github.com/aws/aws-lambda-go/events"
 	"github.com/aws/aws-lambda-go/lambda"
 	"github.com/aws/aws-sdk-go/aws"
@@ -17,7 +16,6 @@ var (
 )
 
 func main() {
-	fmt.Println("helllo")
 	region := os.Getenv("AWS_REGION")
 	awsSession, err := session.NewSession(&aws.Config{
 		Region: aws.String(region)})
@@ -33,8 +31,7 @@ func main() {
 const tableName = "device-table-challenge"
 
 func handler(req events.APIGatewayProxyRequest) (*events.APIGatewayProxyResponse, error) {
-	fmt.Println(req)
-	fmt.Println("req")
+
 	switch req.HTTPMethod {
 	case "GET":
 		return handlers.GetDevice(req, tableName, dynaClient)

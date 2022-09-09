@@ -2,7 +2,7 @@ package handlers
 
 import (
 	"net/http"
-
+	"strings"
 	"github.com/aws/aws-lambda-go/events"
 	"github.com/aws/aws-sdk-go/aws"
 	"github.com/aws/aws-sdk-go/service/dynamodb/dynamodbiface"
@@ -16,7 +16,10 @@ type ErrorBody struct {
 }
 
 func GetDevice(req events.APIGatewayProxyRequest, tableName string, dynaClient dynamodbiface.DynamoDBAPI) (*events.APIGatewayProxyResponse, error) {
-	id := req.QueryStringParameters["id"]
+	path := req.Path
+	splitedPath := strings.Split(path, "/")
+	id := splitedPath[len(splitedPath) - 1]
+
 	if len(id) > 0 {
 		result, err := device.FetchDevice(id, tableName, dynaClient)
 		if err != nil {

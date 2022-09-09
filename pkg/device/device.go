@@ -18,6 +18,7 @@ var (
 	ErrorDeviceAlreadyExists     = "Device already exists"
 	ErrorCouldNotMarshalItem     = "Could not marshal item"
 	ErrorCouldNotDynamoPutItem   = "Could not put item in dynamo "
+	ErrorItemWasNotInTheDataBase = "Item was not in the DataBase"
 )
 
 type Device struct {
@@ -44,9 +45,14 @@ func FetchDevice(id, tableName string, dynaClient dynamodbiface.DynamoDBAPI) (*D
 	}
 
 	item := new(Device)
+	
 	err = dynamodbattribute.UnmarshalMap(result.Item, item)
 	if err != nil {
 		return nil, errors.New(ErrorFailedToUnmarshalRecord)
+	}
+
+	if item.Id == "" {
+		return nil, errors.New(ErrorItemWasNotInTheDataBase)
 	}
 	return item, nil
 }
