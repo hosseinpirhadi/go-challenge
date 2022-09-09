@@ -17,8 +17,13 @@ var (
 	ErrorFailedToUnmarshalRecord = "Failed to unmarshal record"
 	ErrorDeviceAlreadyExists     = "Device already exists"
 	ErrorCouldNotMarshalItem     = "Could not marshal item"
-	ErrorCouldNotDynamoPutItem   = "Could not put item in dynamo "
+	ErrorCouldNotDynamoPutItem   = "Could not put item in dynamo"
 	ErrorItemWasNotInTheDataBase = "Item was not in the DataBase"
+	ErrorIdIsEmpty = "id field should be enterd"
+	ErrorDeviceModelIsEmpty = "device model field should be enterd"
+	ErrorNameIsEmpty = "name field should be enterd"
+	ErrorNoteIsEmpty = "note field should be enterd"
+	ErrorSerialIsEmpty = "serial field should be enterd"
 )
 
 type Device struct {
@@ -54,6 +59,7 @@ func FetchDevice(id, tableName string, dynaClient dynamodbiface.DynamoDBAPI) (*D
 	if item.Id == "" {
 		return nil, errors.New(ErrorItemWasNotInTheDataBase)
 	}
+
 	return item, nil
 }
 
@@ -79,6 +85,21 @@ func CreateDevice(req events.APIGatewayProxyRequest, tableName string, dynaClien
 
 	if err := json.Unmarshal([]byte(req.Body), &d); err != nil {
 		return nil, errors.New(ErrorInvalidDeviceData)
+	}
+	if d.Id == "" {
+		return nil, errors.New(ErrorIdIsEmpty)
+	}
+	if d.DeviceModel == "" {
+		return nil, errors.New(ErrorDeviceModelIsEmpty)
+	}
+	if d.Name == "" {
+		return nil, errors.New(ErrorNameIsEmpty)
+	}
+	if d.Note == "" {
+		return nil, errors.New(ErrorNoteIsEmpty)
+	}
+	if d.Serial == "" {
+		return nil, errors.New(ErrorSerialIsEmpty)
 	}
 	currentDevice, _ := FetchDevice(d.Id, tableName, dynaClient)
 	if currentDevice != nil && len(currentDevice.Id) != 0 {

@@ -21,7 +21,7 @@ Resources:
         ChallengeEndPoint:
           Type: Api
           Properties:
-            Path: /test/{id}
-            Method: GET
+            Path: /test
+            Method: POST
     Metadata:
       SamResourceId: Challenge
