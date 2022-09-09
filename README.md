@@ -76,7 +76,7 @@ Example: `https://api123.amazonaws.com/api/devices/id1`
 - To run the project locally, use `sam local start-api` command
 - It can be tested using PostMan
 
-![testing challenge via postman](./testing.gif)
+![testing challenge via postman](./testing.gif?raw=true)
 
 Use [this link](https://8xsnc3ax5l.execute-api.us-east-1.amazonaws.com/staging/) to test project on AWS like above example.
 
