@@ -1,0 +1,26 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: AWS::Serverless-2016-10-31
+Description: >
+  Demo of sam
+
+  we try out
+
+Globals:
+  Function:
+    Timeout: 5
+
+Resources:
+  Challenge:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: cmd/
+      Handler: challenge
+      Runtime: go1.x
+      Architectures: 
+        - x86_64
+      Events:
+        ChallengeEndPoint:
+          Type: Api
+          Properties:
+            Path: '/'
+            Method: get
