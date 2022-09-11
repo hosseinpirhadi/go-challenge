@@ -15,6 +15,9 @@ type ErrorBody struct {
 	ErrorMsg *string `json:"error,omitempty"`
 }
 
+//GetDevice handle Get request
+//if the client request a specific device id this function will call FetchDevice
+//if the clieant request whitout a specific id this function will call FetchDevices
 func GetDevice(req events.APIGatewayProxyRequest, tableName string, dynaClient dynamodbiface.DynamoDBAPI) (*events.APIGatewayProxyResponse, error) {
 	path := req.Path
 	splitedPath := strings.Split(path, "/")
@@ -39,6 +42,7 @@ func GetDevice(req events.APIGatewayProxyRequest, tableName string, dynaClient d
 	return apiResponse(http.StatusOK, result)
 }
 
+//CreateDecive handle Post request
 func CreateDevice(req events.APIGatewayProxyRequest, tableName string, dynaClient dynamodbiface.DynamoDBAPI) (*events.APIGatewayProxyResponse, error) {
 	result, err := device.CreateDevice(req, tableName, dynaClient)
 	if err != nil {
@@ -49,6 +53,7 @@ func CreateDevice(req events.APIGatewayProxyRequest, tableName string, dynaClien
 	return apiResponse(http.StatusCreated, result)
 }
 
+//UnhandledMethod will handle requests other than Get and Post
 func UnhandledMethod() (*events.APIGatewayProxyResponse, error) {
 	return apiResponse(http.StatusMethodNotAllowed, ErrorMethodNotAllowed)
 }

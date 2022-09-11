@@ -1,6 +1,4 @@
-//
-//
-//
+// This package is the core of the project
 package main
 
 import (
@@ -18,9 +16,11 @@ var (
 	dynaClient dynamodbiface.DynamoDBAPI
 )
 
+
 func main() {
 	region := os.Getenv("AWS_REGION")
-	awsSession, err := session.NewSession(&aws.Config{
+	// create a session for connectiong to dunamodb
+	awsSession, err := session.NewSession(&aws.Config{	
 		Region: aws.String(region)})
 
 	if err != nil {
@@ -31,8 +31,10 @@ func main() {
 	lambda.Start(handler)
 }
 
+//dynamodb table name
 const tableName = "device-table-challenge"
 
+//handler gets all requests from AWS Api gateway
 func handler(req events.APIGatewayProxyRequest) (*events.APIGatewayProxyResponse, error) {
 
 	switch req.HTTPMethod {

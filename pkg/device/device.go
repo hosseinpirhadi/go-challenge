@@ -11,6 +11,7 @@ import (
 	"github.com/aws/aws-sdk-go/service/dynamodb/dynamodbiface"
 )
 
+// Theae are errors to give better definition
 var (
 	ErrorInvalidDeviceData       = "Invalid user data"
 	ErrorFailedToFetchRecord     = "Failed to fetch record"
@@ -26,6 +27,7 @@ var (
 	ErrorSerialIsEmpty = "serial field should be enterd"
 )
 
+//Device contains id, devicemodel, name, note, serial
 type Device struct {
 	Id          string `json:"id"`
 	DeviceModel string `json:"deviceModel"`
@@ -34,6 +36,7 @@ type Device struct {
 	Serial      string `json:"serial"`
 }
 
+//FetchDevice will get specific device based on id from dynamodb
 func FetchDevice(id, tableName string, dynaClient dynamodbiface.DynamoDBAPI) (*Device, error) {
 	input := &dynamodb.GetItemInput{
 		Key: map[string]*dynamodb.AttributeValue{
@@ -63,6 +66,7 @@ func FetchDevice(id, tableName string, dynaClient dynamodbiface.DynamoDBAPI) (*D
 	return item, nil
 }
 
+//FetchDevices will get all devices from dynamodb
 func FetchDevices(tableName string, dynaClient dynamodbiface.DynamoDBAPI) (*[]Device, error) {
 	input := &dynamodb.ScanInput{
 		TableName: aws.String(tableName),
@@ -77,6 +81,7 @@ func FetchDevices(tableName string, dynaClient dynamodbiface.DynamoDBAPI) (*[]De
 	return item, nil
 }
 
+//CreateDevice will create a devices and inset it to dynamodb
 func CreateDevice(req events.APIGatewayProxyRequest, tableName string, dynaClient dynamodbiface.DynamoDBAPI) (
 	*Device,
 	error,
