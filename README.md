@@ -1,7 +1,5 @@
 ![GitHub go.mod Go version](https://img.shields.io/github/go-mod/go-version/hosseinpirhadi/go-challenge)
 
-![AppVeyor tests](https://img.shields.io/appveyor/tests/hosseinpirhadi/go-challenge)
-
 
 # Go Challenge: Simple Restful API on AWS
 
@@ -77,6 +75,9 @@ Example: `https://api123.amazonaws.com/api/devices/id1`
 - It can be tested using PostMan
 
 ![testing challenge via postman](./testing.gif?raw=true)
+
+<p><img align="right" src"https://github.com/hosseinpirhadi/go-challenge/blob/main/testing.gif" width="500" height="320" /> </p>
+
 
 Use [this link](https://8xsnc3ax5l.execute-api.us-east-1.amazonaws.com/staging/) to test project on AWS like above example.
 
